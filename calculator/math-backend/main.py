@@ -34,8 +34,8 @@ def safe_eval_expression(expression: str) -> Union[float, str]:
         expression = expression.strip()
 
         # Replace common mathematical notation
-        expression = re.sub(r'\blog\b', 'log10', expression)  # log() -> log10()
-        expression = re.sub(r'\bln\b', 'log', expression)     # ln() -> log()
+        expression = re.sub(r'\blog\(([^)]+)\)', r'log(\1, 10)', expression)  # log(x) -> log(x, 10)
+        expression = re.sub(r'\bln\(([^)]+)\)', r'log(\1)', expression)       # ln(x) -> log(x)
         expression = expression.replace('^', '**')            # ^ -> **
 
         # Create sympy symbols for common constants
@@ -47,8 +47,7 @@ def safe_eval_expression(expression: str) -> Union[float, str]:
             'cos': sp.cos,
             'tan': sp.tan,
             'sqrt': sp.sqrt,
-            'log': sp.log,        # natural log
-            'log10': sp.log10,    # base 10 log
+            'log': sp.log,        # can take base as second argument
             'exp': sp.exp,
             'abs': sp.Abs,
             'pi': sp.pi,
