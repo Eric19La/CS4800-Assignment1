@@ -30,12 +30,17 @@ export default function Calculator() {
     if (isResult) {
       // If we just showed a result, start new expression with that result
       setExpression(display + op);
+      setDisplay(display + op);
       setIsResult(false);
+    } else if (display === '0') {
+      // If display shows 0, replace it with the operator
+      setDisplay(op);
+      setExpression(op);
     } else {
       // Otherwise, add operator to current expression
       setExpression(expression + op);
+      setDisplay(display + op);
     }
-    setDisplay(display + op);
   };
 
   // Handles function button presses (sin, cos, sqrt, etc.)
@@ -45,6 +50,10 @@ export default function Calculator() {
       setExpression(`${func}(${display})`);
       setDisplay(`${func}(${display})`);
       setIsResult(false);
+    } else if (display === '0') {
+      // If display shows 0, replace it with the function
+      setDisplay(func + '(');
+      setExpression(func + '(');
     } else {
       // Otherwise, add function to current expression
       setExpression(expression + func + '(');
