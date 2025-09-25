@@ -134,15 +134,24 @@ Build a calculator that can Add, Subtract, Multiply & Divide numbers, Evaluate e
    - **Time to Fix**: 25 minutes
 
 7. **Bug #007**: Virtual environment package isolation
+
    - **Description**: Package installed globally but not accessible in venv
    - **Severity**: Medium
    - **Status**: Fixed
    - **Solution**: Installed google-genai directly in virtual environment
    - **Time to Fix**: 10 minutes
 
+8. **Bug #008**: AI Model Prompting
+
+   - **Description**: AI model is not giving us the correct answers we wish for
+   - **Severity**: High
+   - **Status**: Unresolved
+   - **Solution**: Fix up the prompt, however due to model implications, we use it for more simple calculations
+   - **Time to Fix**: 30 minutes
+
 ### **Total Bugs Found**: 7
 
-### **Total Time Spent on Bug Fixes**: 1 hour 30 minutes
+### **Total Time Spent on Bug Fixes**: 2 hour
 
 ---
 

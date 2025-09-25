@@ -13,6 +13,7 @@ A full-stack AI-powered calculator application built with Next.js frontend and F
 ## ✨ Features
 
 ### Core Mathematical Operations
+
 - Basic arithmetic: +, -, ×, ÷
 - Advanced functions:
   - **Trigonometric**: sin, cos, tan, asin, acos, atan
@@ -23,11 +24,13 @@ A full-stack AI-powered calculator application built with Next.js frontend and F
   - **Grouping**: Parentheses support
 
 ### AI-Powered Computation
+
 - **Primary**: Google Gemini AI API for intelligent expression evaluation
 - **Fallback**: SymPy mathematical engine for reliability
 - **Smart routing**: Automatically uses best available method
 
 ### User Interface
+
 - Modern, responsive calculator design with Tailwind CSS
 - Scientific calculator layout with function buttons
 - Real-time expression display showing both input and result
@@ -37,11 +40,13 @@ A full-stack AI-powered calculator application built with Next.js frontend and F
 ## 🚀 Quick Start
 
 ### 1. Get Free Gemini API Key
+
 1. Visit [Google AI Studio](https://ai.google.dev/)
 2. Click "Get API key" and create/use existing project
 3. Generate free API key (generous free tier)
 
 ### 2. Backend Setup
+
 ```bash
 cd math-backend
 
@@ -60,6 +65,7 @@ python main.py
 ```
 
 ### 3. Frontend Setup
+
 ```bash
 cd my-app
 
@@ -69,17 +75,20 @@ npm run dev
 ```
 
 ### 4. Access Calculator
+
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:8000
 
 ## 📊 Project Metrics
 
 ### Time Tracking
+
 - **Estimated**: 12 hours
 - **Actual**: 6 hours (50% under estimate!)
 - **Efficiency**: Completed ahead of schedule
 
 ### Bug Statistics
+
 - **Total Bugs Found**: 7
 - **All Bugs Fixed**: ✅
 - **Categories**: Dependency conflicts, API integration, UI syntax
@@ -87,11 +96,13 @@ npm run dev
 ## 🛠 Technology Stack
 
 **Frontend:**
+
 - Next.js 15.5.4 with React 19.1.0
 - Tailwind CSS 4 for styling
 - Modern responsive design
 
 **Backend:**
+
 - FastAPI 0.117.1 (Python web framework)
 - Google Gemini AI API 1.38.0
 - SymPy 1.12 (mathematical computation fallback)
@@ -112,13 +123,13 @@ calculator/
 │   ├── main_sympy_backup.py  # SymPy-only backup
 │   ├── requirements.txt
 │   └── .env              # Environment variables
-├── PROJECT_TIME_TRACKING.md  # Detailed time & bug tracking
-└── README.md             # This file
+└──
 ```
 
 ## 🧪 Testing Examples
 
 ### API Testing
+
 ```bash
 # Test AI status
 curl "http://localhost:8000/ai-status"
@@ -130,6 +141,7 @@ curl -X POST "http://localhost:8000/calculate" \
 ```
 
 ### Sample Calculations
+
 - **Basic**: `2 + 3 * 4` → `14`
 - **Trigonometry**: `sin(pi/2) + cos(0)` → `2.0`
 - **Logarithms**: `log(100) + ln(e)` → `3.0`
@@ -138,6 +150,7 @@ curl -X POST "http://localhost:8000/calculate" \
 ## 📋 Assignment Deliverables
 
 ### ✅ Completed
+
 - [x] **Source Code**: Complete calculator implementation
 - [x] **Screenshots**: UI screenshots (see `my-app` running at localhost:3000)
 - [x] **Time Tracking**: Detailed in `PROJECT_TIME_TRACKING.md`
@@ -145,6 +158,7 @@ curl -X POST "http://localhost:8000/calculate" \
 - [x] **Estimated vs Actual**: 6 hours actual vs 12 hours estimated
 
 ### 📈 Performance Highlights
+
 - **50% faster than estimated** completion time
 - **100% of requirements met** with additional AI enhancement
 - **Zero critical bugs** in final version
@@ -153,6 +167,7 @@ curl -X POST "http://localhost:8000/calculate" \
 ## 🏆 Project Success
 
 This calculator project successfully demonstrates:
+
 - **Full-stack development** with modern technologies
 - **AI integration** using free, alternative APIs
 - **Error handling** and graceful fallback mechanisms
@@ -164,6 +179,7 @@ The calculator exceeds assignment requirements with AI-powered computation, mode
 ## 📞 Support
 
 For questions or issues:
+
 1. Check `PROJECT_TIME_TRACKING.md` for detailed implementation notes
 2. Ensure virtual environment is activated for backend dependencies
 3. Verify Gemini API key is properly set in `.env` file
