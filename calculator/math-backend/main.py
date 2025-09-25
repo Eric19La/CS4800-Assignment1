@@ -43,7 +43,7 @@ try:
     gemini_api_key = os.getenv('GEMINI_API_KEY')
     if gemini_api_key:
         client = genai.Client(api_key=gemini_api_key)
-        model_id = "gemini-1.5-flash"  # Using stable model
+        model_id = "gemini-1.5-flash-8b"  # Using free alternative model
         ai_available = True
         logger.info("Gemini AI initialized successfully")
     else:

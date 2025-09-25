@@ -187,7 +187,38 @@ export default function Calculator() {
           <ButtonGrid className="grid-cols-4 mb-4">
             <CalcButton onClick={() => handleFunction('sqrt')} variant="function">√</CalcButton>
             <CalcButton onClick={() => handleOperator('**')} variant="function">x^y</CalcButton>
-            <CalcButton onClick={() => handleFunction('exp')} variant="function">exp</CalcButton>
+            <CalcButton onClick={async () => {
+              if (display !== '0' && !isNaN(parseFloat(display))) {
+                // If there's a valid number, apply exp to it immediately
+                const currentValue = parseFloat(display);
+                const expExpression = `exp(${currentValue})`;
+                setExpression(expExpression);
+                setDisplay(expExpression);
+
+                // Calculate the result
+                try {
+                  const response = await fetch('http://localhost:8000/calculate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ expression: expExpression }),
+                  });
+                  const data = await response.json();
+                  if (response.ok && typeof data.result === 'number') {
+                    setDisplay(data.result.toString());
+                    setIsResult(true);
+                  } else {
+                    setDisplay('Error');
+                    setIsResult(true);
+                  }
+                } catch (error) {
+                  setDisplay('Connection Error');
+                  setIsResult(true);
+                }
+              } else {
+                // Otherwise, add exp( for user to complete
+                handleFunction('exp');
+              }
+            }} variant="function">exp</CalcButton>
             <CalcButton onClick={() => handleFunction('ln')} variant="function">ln</CalcButton>
           </ButtonGrid>
 
