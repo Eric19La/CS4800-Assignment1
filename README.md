@@ -18,6 +18,9 @@ https://github.com/user-attachments/assets/dc40a9b1-4a9a-4f04-9f0c-4829ad812f3b
 
 **Screenshots:**
 
+<img width="467" height="730" alt="Screenshot 2025-09-25 at 2 43 36 AM" src="https://github.com/user-attachments/assets/1baabd94-d1c5-480c-a8d7-78e82f50873f" />
+<img width="474" height="743" alt="Screenshot 2025-09-25 at 2 44 11 AM" src="https://github.com/user-attachments/assets/5ca52728-14db-4031-aacf-97fd049448be" />
+
 ## ✨ Features
 
 ### Core Mathematical Operations
