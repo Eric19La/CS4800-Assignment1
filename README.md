@@ -14,6 +14,8 @@ A full-stack AI-powered calculator application built with Next.js frontend and F
 
 **Demo Video:**
 
+Uploading Screen Recording 2025-09-25 at 2.14.21 AM.mov…
+
 **Screenshots:**
 
 ## ✨ Features
