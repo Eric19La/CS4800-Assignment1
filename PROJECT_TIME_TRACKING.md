@@ -149,7 +149,7 @@ Build a calculator that can Add, Subtract, Multiply & Divide numbers, Evaluate e
    - **Solution**: Fix up the prompt, however due to model implications, we use it for more simple calculations
    - **Time to Fix**: 30 minutes
 
-### **Total Bugs Found**: 7
+### **Total Bugs Found**: 8
 
 ### **Total Time Spent on Bug Fixes**: 2 hour
 
