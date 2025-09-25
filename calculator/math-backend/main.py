@@ -66,16 +66,18 @@ def evaluate_with_ai(expression: str) -> Union[float, str]:
 
         # Create a prompt for mathematical evaluation
         prompt = f"""
-        Please evaluate the following mathematical expression and return ONLY the numerical result:
+        You are a precise mathematical calculator. Evaluate this expression exactly:
 
-        Expression: {expression}
+        {expression}
 
-        Rules:
-        - If the expression contains trigonometric functions, use radians
-        - Return only the final numerical answer as a decimal number
-        - If invalid, respond with "Error: [brief description]"
+        CRITICAL REQUIREMENTS:
+        - Use radians for all trigonometric functions (sin, cos, tan)
+        - Use natural logarithm for ln() and base-10 for log()
+        - Return ONLY the final numerical result as a decimal number
+        - Be precise to at least 4 decimal places
+        - If invalid, return "Error: [reason]"
 
-        Calculate: {expression}
+        Calculate this step by step and return only the final number.
         """
 
         response = client.models.generate_content(
@@ -90,6 +92,7 @@ def evaluate_with_ai(expression: str) -> Union[float, str]:
         # Extract the result from the response
         if response.candidates and len(response.candidates) > 0:
             result_text = response.candidates[0].content.parts[0].text.strip()
+            logger.info(f"AI raw response: '{result_text}'")  # Debug: see full AI response
 
             # Try to parse as float
             try:
@@ -97,7 +100,10 @@ def evaluate_with_ai(expression: str) -> Union[float, str]:
                 import re
                 number_match = re.search(r'[-+]?(?:\d*\.\d+|\d+\.?\d*)', result_text)
                 if number_match:
-                    return float(number_match.group())
+                    parsed_result = float(number_match.group())
+                    rounded_result = round(parsed_result, 4)  # Round AI results to 4 decimals too
+                    logger.info(f"AI parsed result: {parsed_result}, rounded: {rounded_result}")
+                    return rounded_result
                 else:
                     return f"AI Error: Could not extract numerical result from: {result_text}"
             except ValueError:
@@ -148,10 +154,11 @@ def safe_eval_expression(expression: str) -> Union[float, str]:
             # Use sympify to parse the expression safely
             parsed_expr = sp.sympify(expression, locals=allowed_functions)
 
-            # Evaluate the expression
+            # Evaluate the expression and round to 4 decimal places
             result = float(parsed_expr.evalf())
+            rounded_result = round(result, 4)
 
-            return result
+            return rounded_result
 
         except (ValueError, TypeError, sp.SympifyError) as e:
             return f"SymPy Error: Invalid mathematical expression - {str(e)}"
@@ -184,16 +191,35 @@ async def calculate(request: CalculationRequest):
             logger.info(f"Attempting AI evaluation for: {request.expression}")
             ai_result = evaluate_with_ai(request.expression)
 
-            # Check if AI result is valid (not an error message)
-            if isinstance(ai_result, (int, float)) or (isinstance(ai_result, str) and not ai_result.startswith("AI Error:")):
-                result = ai_result
-                method_used = "ai"
-                logger.info(f"AI evaluation successful: {result}")
-            else:
-                logger.warning(f"AI evaluation failed: {ai_result}")
+            # Also get SymPy result for verification
+            sympy_result = safe_eval_expression(request.expression)
 
-        # Fallback to SymPy if AI failed or unavailable
-        if result is None or (isinstance(result, str) and result.startswith("AI Error:")):
+            # Check if AI result is valid and close to SymPy result
+            if isinstance(ai_result, (int, float)) and isinstance(sympy_result, (int, float)):
+                # If results are close (within 0.1% or 0.001 absolute), use AI
+                diff = abs(ai_result - sympy_result)
+                relative_diff = diff / max(abs(sympy_result), 1) if sympy_result != 0 else diff
+
+                if relative_diff < 0.001 or diff < 0.001:
+                    result = ai_result
+                    method_used = "ai"
+                    logger.info(f"AI evaluation verified: {result}")
+                else:
+                    result = sympy_result
+                    method_used = "sympy"
+                    logger.warning(f"AI result {ai_result} differs from SymPy {sympy_result}, using SymPy")
+            else:
+                # If AI result is invalid, use SymPy
+                if isinstance(sympy_result, (int, float)):
+                    result = sympy_result
+                    method_used = "sympy"
+                    logger.warning(f"AI evaluation failed: {ai_result}, using SymPy")
+                else:
+                    result = ai_result  # Return AI error if SymPy also failed
+                    method_used = "ai"
+
+        # Fallback to SymPy if AI unavailable
+        if result is None:
             logger.info(f"Using SymPy fallback for: {request.expression}")
             result = safe_eval_expression(request.expression)
             method_used = "sympy"
